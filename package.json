@@ -1,6 +1,6 @@
 {
   "name": "nest-cluster-ipc",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Nest module wrapper for node-cluster-ipc",
   "author": "Chun-Kai Wang <chunkai1312@gmail.com>",
   "keywords": [
