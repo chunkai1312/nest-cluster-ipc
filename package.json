@@ -1,10 +1,25 @@
 {
   "name": "nest-cluster-ipc",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "description": "A Nest module wrapper for node-cluster-ipc",
+  "author": "Chun-Kai Wang <chunkai1312@gmail.com>",
+  "keywords": [
+    "nest",
+    "nestjs",
+    "nest-cluster-ipc",
+    "node-cluster-ipc",
+    "cluster-ipc",
+    "cluster",
+    "ipc",
+    "inter-process-communication",
+    "message-passing"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
