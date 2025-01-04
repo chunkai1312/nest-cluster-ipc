@@ -5,6 +5,10 @@ export const InjectClusterIpc = (): ParameterDecorator => {
   return Inject(CLUSTER_IPC_INSTANCE);
 };
 
-export const OnMessage = (): MethodDecorator => {
-  return SetMetadata(CLUSTER_IPC_LISTENER_METADATA, { event: 'message' });
+export const OnMessage = (channel: string): MethodDecorator => {
+  return SetMetadata(CLUSTER_IPC_LISTENER_METADATA, { event: 'message', channel });
+};
+
+export const OnRequest = (channel: string): MethodDecorator => {
+  return SetMetadata(CLUSTER_IPC_LISTENER_METADATA, { event: 'request', channel });
 };

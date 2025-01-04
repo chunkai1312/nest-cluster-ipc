@@ -1,6 +1,8 @@
 import { ModuleMetadata, Type } from '@nestjs/common';
 
-export interface ClusterIpcModuleOptions {}
+export interface ClusterIpcModuleOptions {
+  requestTimeout?: number;
+}
 
 export interface ClusterIpcModuleOptionsFactory {
   createClusterIpcOptions(): Promise<ClusterIpcModuleOptions> | ClusterIpcModuleOptions;

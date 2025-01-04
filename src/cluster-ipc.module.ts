@@ -19,7 +19,7 @@ export class ClusterIpcModule {
       providers: [
         {
           provide: CLUSTER_IPC_INSTANCE,
-          useValue: new ClusterIpc(),
+          useValue: new ClusterIpc(options),
         },
       ],
       exports: [CLUSTER_IPC_INSTANCE],
@@ -34,7 +34,7 @@ export class ClusterIpcModule {
         ...this.createAsyncProviders(options),
         {
           provide: CLUSTER_IPC_INSTANCE,
-          useFactory: (options: ClusterIpcModuleOptions) => new ClusterIpc(),
+          useFactory: (options: ClusterIpcModuleOptions) => new ClusterIpc(options),
           inject: [CLUSTER_IPC_INSTANCE],
         },
       ],

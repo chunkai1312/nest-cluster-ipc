@@ -44,9 +44,11 @@ export class ClusterIpcExplorer implements OnApplicationBootstrap, OnApplication
     const clusterIpcListenerMetadata = this.metadataAccessor.getClusterIpcListenerMetadata(instance[methodKey]);
     if (!clusterIpcListenerMetadata) return;
 
-    const { event } = clusterIpcListenerMetadata;
+    const { event, channel } = clusterIpcListenerMetadata;
     const listenerMethod = this.clusterIpc.on.bind(this.clusterIpc);
 
-    listenerMethod(event, (...args: unknown[]) => instance[methodKey].call(instance, ...args));
+    listenerMethod(event, (channe: string, ...args: unknown[]) => {
+      if (channe === channel) instance[methodKey].call(instance, ...args);
+    });
   }
 }
