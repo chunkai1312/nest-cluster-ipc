@@ -4815,10 +4815,10 @@ node-abort-controller@^3.0.1:
   resolved "https://registry.yarnpkg.com/node-abort-controller/-/node-abort-controller-3.1.1.tgz#a94377e964a9a37ac3976d848cb5c765833b8548"
   integrity sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==
 
-node-cluster-ipc@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/node-cluster-ipc/-/node-cluster-ipc-0.1.0.tgz#e63ddc8d1a29d9a819707f599fcf0c516412bc2f"
-  integrity sha512-cgqB0xspYxlVI4ZXrfEDg1Mvk2M76MKwBwzbWk8vaYtibz5a7tod2QqUtqCBEUM2u8gdPEJG5T1wPhVwuvlFzQ==
+node-cluster-ipc@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/node-cluster-ipc/-/node-cluster-ipc-1.0.0.tgz#b9cd19e884a634aad17a215dc96989450c6c4ee7"
+  integrity sha512-ciUXHMvg+w07cG/rQ2eaSE2ZHr7o6D0zKKVwQ4Uk1u9cEwbxfCCi53nmajNlhygKJTIY0AHkGirUSazDZz8wvQ==
 
 node-emoji@1.11.0:
   version "1.11.0"
