@@ -1,28 +1,28 @@
 import { Inject, Injectable, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner } from '@nestjs/core';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
-import { ClusterIPC } from 'node-cluster-ipc';
-import { ClusterIPCMetadataAccessor } from './cluster-ipc-metadata.accessor';
+import { ClusterIpc } from 'node-cluster-ipc';
+import { ClusterIpcMetadataAccessor } from './cluster-ipc-metadata.accessor';
 import { CLUSTER_IPC_INSTANCE } from './cluster-ipc.constants';
 
 @Injectable()
-export class ClusterIPCExplorer implements OnApplicationBootstrap, OnApplicationShutdown {
+export class ClusterIpcExplorer implements OnApplicationBootstrap, OnApplicationShutdown {
   constructor(
-    @Inject(CLUSTER_IPC_INSTANCE) private readonly clusterIPC: ClusterIPC,
+    @Inject(CLUSTER_IPC_INSTANCE) private readonly clusterIpc: ClusterIpc,
     private readonly discoveryService: DiscoveryService,
-    private readonly metadataAccessor: ClusterIPCMetadataAccessor,
+    private readonly metadataAccessor: ClusterIpcMetadataAccessor,
     private readonly metadataScanner: MetadataScanner,
   ) { }
 
   onApplicationBootstrap() {
-    this.loadClusterIPCListeners();
+    this.loadClusterIpcListeners();
   }
 
   onApplicationShutdown() {
-    this.clusterIPC.removeAllListeners();
+    this.clusterIpc.removeAllListeners();
   }
 
-  loadClusterIPCListeners() {
+  loadClusterIpcListeners() {
     const providers = this.discoveryService.getProviders();
     const controllers = this.discoveryService.getControllers();
     [...providers, ...controllers]
@@ -35,17 +35,17 @@ export class ClusterIPCExplorer implements OnApplicationBootstrap, OnApplication
           instance,
           prototype,
           (methodKey: string) =>
-            this.subscribeToClusterIPCIfListener(instance, methodKey),
+            this.subscribeToClusterIpcIfListener(instance, methodKey),
         );
       });
   }
 
-  private subscribeToClusterIPCIfListener(instance: Record<string, any>, methodKey: string) {
-    const clusterIPCListenerMetadata = this.metadataAccessor.getClusterIPCListenerMetadata(instance[methodKey]);
-    if (!clusterIPCListenerMetadata) return;
+  private subscribeToClusterIpcIfListener(instance: Record<string, any>, methodKey: string) {
+    const clusterIpcListenerMetadata = this.metadataAccessor.getClusterIpcListenerMetadata(instance[methodKey]);
+    if (!clusterIpcListenerMetadata) return;
 
-    const { event } = clusterIPCListenerMetadata;
-    const listenerMethod = this.clusterIPC.on.bind(this.clusterIPC);
+    const { event } = clusterIpcListenerMetadata;
+    const listenerMethod = this.clusterIpc.on.bind(this.clusterIpc);
 
     listenerMethod(event, (...args: unknown[]) => instance[methodKey].call(instance, ...args));
   }

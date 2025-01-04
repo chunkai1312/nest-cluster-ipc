@@ -1,14 +1,14 @@
 import { ModuleMetadata, Type } from '@nestjs/common';
 
-export interface ClusterIPCModuleOptions {}
+export interface ClusterIpcModuleOptions {}
 
-export interface ClusterIPCModuleOptionsFactory {
-  createClusterIPCOptions(): Promise<ClusterIPCModuleOptions> | ClusterIPCModuleOptions;
+export interface ClusterIpcModuleOptionsFactory {
+  createClusterIpcOptions(): Promise<ClusterIpcModuleOptions> | ClusterIpcModuleOptions;
 }
 
-export interface ClusterIPCModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
-  useExisting?: Type<ClusterIPCModuleOptionsFactory>;
-  useClass?: Type<ClusterIPCModuleOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<ClusterIPCModuleOptions> | ClusterIPCModuleOptions;
+export interface ClusterIpcModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+  useExisting?: Type<ClusterIpcModuleOptionsFactory>;
+  useClass?: Type<ClusterIpcModuleOptionsFactory>;
+  useFactory?: (...args: any[]) => Promise<ClusterIpcModuleOptions> | ClusterIpcModuleOptions;
   inject?: any[];
 }

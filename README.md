@@ -14,24 +14,24 @@ $ npm install --save nest-cluster-ipc node-cluster-ipc
 
 ## Getting started
 
-Once the installation is complete, import the `ClusterIPCModule` into the root `AppModule` and run the `forRoot()` static method as shown below:
+Once the installation is complete, import the `ClusterIpcModule` into the root `AppModule` and run the `forRoot()` static method as shown below:
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { ClusterIPCModule } from 'nest-cluster-ipc';
+import { ClusterIpcModule } from 'nest-cluster-ipc';
 
 @Module({
   imports: [
-    ClusterIPCModule.forRoot(),
+    ClusterIpcModule.forRoot(),
   ],
 })
 export class AppModule {}
 ```
 
-Next, inject the `ClusterIPC` instance using the `@InjectClusterIPC()` decorator.
+Next, inject the `ClusterIpc` instance using the `@InjectClusterIpc()` decorator.
 
 ```typescript
-constructor(@InjectClusterIPC() private readonly ipc: ClusterIPC) {}
+constructor(@InjectClusterIpc() private readonly ipc: ClusterIpc) {}
 ```
 
 ## Sending a message to a worker

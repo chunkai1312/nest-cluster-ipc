@@ -1,40 +1,40 @@
 import { Module, DynamicModule, Provider, Global, Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
 import { CLUSTER_IPC_INSTANCE, CLUSTER_IPC_OPTIONS } from './cluster-ipc.constants';
-import { ClusterIPC } from 'node-cluster-ipc';
-import { ClusterIPCExplorer } from './cluster-ipc.explorer';
-import { ClusterIPCMetadataAccessor } from './cluster-ipc-metadata.accessor';
-import { ClusterIPCModuleAsyncOptions, ClusterIPCModuleOptions, ClusterIPCModuleOptionsFactory } from './interfaces';
+import { ClusterIpc } from 'node-cluster-ipc';
+import { ClusterIpcExplorer } from './cluster-ipc.explorer';
+import { ClusterIpcMetadataAccessor } from './cluster-ipc-metadata.accessor';
+import { ClusterIpcModuleAsyncOptions, ClusterIpcModuleOptions, ClusterIpcModuleOptionsFactory } from './interfaces';
 
 @Global()
 @Module({
   imports: [DiscoveryModule],
-  providers: [ClusterIPCExplorer, ClusterIPCMetadataAccessor],
+  providers: [ClusterIpcExplorer, ClusterIpcMetadataAccessor],
 })
-export class ClusterIPCModule {
-  static forRoot(options?: ClusterIPCModuleOptions): DynamicModule {
+export class ClusterIpcModule {
+  static forRoot(options?: ClusterIpcModuleOptions): DynamicModule {
     return {
-      module: ClusterIPCModule,
+      module: ClusterIpcModule,
       imports: [DiscoveryModule],
       providers: [
         {
           provide: CLUSTER_IPC_INSTANCE,
-          useValue: new ClusterIPC(),
+          useValue: new ClusterIpc(),
         },
       ],
       exports: [CLUSTER_IPC_INSTANCE],
     };
   }
 
-  static forRootAsync(options?: ClusterIPCModuleAsyncOptions): DynamicModule {
+  static forRootAsync(options?: ClusterIpcModuleAsyncOptions): DynamicModule {
     return {
-      module: ClusterIPCModule,
+      module: ClusterIpcModule,
       imports: options.imports,
       providers: [
         ...this.createAsyncProviders(options),
         {
           provide: CLUSTER_IPC_INSTANCE,
-          useFactory: (options: ClusterIPCModuleOptions) => new ClusterIPC(),
+          useFactory: (options: ClusterIpcModuleOptions) => new ClusterIpc(),
           inject: [CLUSTER_IPC_INSTANCE],
         },
       ],
@@ -42,11 +42,11 @@ export class ClusterIPCModule {
     };
   }
 
-  private static createAsyncProviders(options: ClusterIPCModuleAsyncOptions): Provider[] {
+  private static createAsyncProviders(options: ClusterIpcModuleAsyncOptions): Provider[] {
     if (options.useExisting || options.useFactory) {
       return [this.createAsyncOptionsProvider(options)];
     }
-    const useClass = options.useClass as Type<ClusterIPCModuleOptionsFactory>;
+    const useClass = options.useClass as Type<ClusterIpcModuleOptionsFactory>;
     return [
       this.createAsyncOptionsProvider(options),
       {
@@ -56,7 +56,7 @@ export class ClusterIPCModule {
     ];
   }
 
-  private static createAsyncOptionsProvider(options: ClusterIPCModuleAsyncOptions): Provider {
+  private static createAsyncOptionsProvider(options: ClusterIpcModuleAsyncOptions): Provider {
     if (options.useFactory) {
       return {
         provide: CLUSTER_IPC_OPTIONS,
@@ -66,12 +66,12 @@ export class ClusterIPCModule {
     }
     const inject = [
       (options.useClass ||
-        options.useExisting) as Type<ClusterIPCModuleOptionsFactory>,
+        options.useExisting) as Type<ClusterIpcModuleOptionsFactory>,
     ];
     return {
       provide: CLUSTER_IPC_OPTIONS,
-      useFactory: async (optionsFactory: ClusterIPCModuleOptionsFactory) =>
-        await optionsFactory.createClusterIPCOptions(),
+      useFactory: async (optionsFactory: ClusterIpcModuleOptionsFactory) =>
+        await optionsFactory.createClusterIpcOptions(),
       inject,
     };
   }
